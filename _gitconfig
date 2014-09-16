@@ -1,0 +1,40 @@
+[user]
+  name = Takemura Hikaru
+  email = takemura@dl.kuis.kyoto-u.ac.jp
+[color]
+  ui = auto
+  diff = auto
+  status = auto
+  interactive = auto
+  branch = auto
+  grep = auto
+[alias]
+  logg = log --stat --pretty=format:'%Cblue%h %Cgreen%ar %Cred%an %Creset%s %Cred%d'
+[core]
+  excludesfile = ~/.gitignore
+  attributesfile = ~/.gitattributes
+  editor = /usr/bin/vim
+  precomposeunicode = true
+  quotepath = true
+[push]
+  default = current
+[ghq]
+  root = ~/.ghq
+  root = ~/.go.src
+[pager]
+  log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
+[grep]
+  lineNumbers = true
+[hub]
+  protocol = https
+[github]
+  user = pika-shi
+[help]
+  autocorrect = 1
+[url "git@github.com:"]
+  pushinsteadof = "https://github.com/"
+  pushinsteadof = "git://github.com/"
+[diff]
+  patience = true

@@ -1,0 +1,207 @@
+#----------------------------------------------------------#
+#                                                          #
+#                         $$\                              #
+#                         $$ |                             #
+#     $$$$$$$$\  $$$$$$$\ $$$$$$$\   $$$$$$\   $$$$$$$\    #
+#     \____$$  |$$  _____|$$  __$$\ $$  __$$\ $$  _____|   #
+#       $$$$ _/ \$$$$$$\  $$ |  $$ |$$ |  \__|$$ /         #
+#      $$  _/    \____$$\ $$ |  $$ |$$ |      $$ |         #
+#     $$$$$$$$\ $$$$$$$  |$$ |  $$ |$$ |      \$$$$$$$\    #
+#     \________|\_______/ \__|  \__|\__|       \_______|   #
+#                                                          #
+#----------------------------------------------------------#
+
+### local settings
+case ${OSTYPE} in
+  darwin*)
+    source ~/.zshrc.osx
+    ;;
+esac
+
+### Alias settings
+
+# expand aliases before completing
+setopt complete_aliases
+
+# general
+alias df='dfc'
+alias du='du -h'
+alias ll='ls -Flh'
+alias python='python -B'
+alias cat='pygmentize -O style=monokai -f console256 -g'
+alias sudo='env PATH=${PATH}:/sbin:/usr/sbin:/usr/local/sbin \sudo'
+
+#git
+alias gst='git status -sb;git stash list'
+alias gcm='git commit -m'
+alias gpl='git pull'
+alias gph='git push'
+alias gm="git merge --no-ff"
+alias gch='git checkout'
+alias ga='git add'
+alias gd='git diff'
+alias gb='git branch'
+alias glgg='git logg'
+alias glg='git logg | head'
+
+### prompt configuration
+
+autoload -U colors
+colors
+REPORTTIME=3
+set bell-style none; setopt nobeep; setopt nolistbeep # no beep
+setopt prompt_subst # use escape sequences
+setopt interactive_comments # ignore commands following # in cui
+bindkey -e
+setopt no_flow_control # disable C-s and C-q
+setopt print_eight_bit  # enable Japanese file name
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>' # C-w deletes the caractor next to the /
+export LS_COLORS='di=01;36' # Show direcotry in water color
+setopt noclobber
+
+RPROMPT="%T"
+setopt transient_rprompt
+function precmd() {
+PROMPT="%{%F{green}%}%{%B%}%n%{%b%}%{%f%}%{${fg[yellow]}%} %~%{${reset_color}%}"
+st=`git status 2>/dev/null`
+if [[ -n `echo "$st" | grep "^nothing to"` ]]; then color=${fg[cyan]}
+elif [[ -n `echo "$st" | grep "^nothing added"` ]]; then color=${fg[blue]}
+elif [[ -n `echo "$st" | grep "^# Untracked"` ]]; then color=${fg_bold[red]}
+else color=${fg[red]}
+fi
+PROMPT+=" %{$color%}$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /')%b%{${reset_color}%}
+"
+}
+
+### completion settings
+autoload -Uz compinit;
+compinit -u
+autoload -Uz url-quote-magic; zle -N self-insert url-quote-magic # automatically escape URL string
+setopt auto_menu # toggle complement candidates using TAB
+setopt auto_list # show all candidates
+export ZLS_COLORS=$LS_COLORS
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31' # Complement process name with kill command
+zstyle ':completion:*:default' menu select=1 # can use Emacs style keybind to select candidates
+zstyle ':completion:*' ignore-parents parent pwd # don't show current directory
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+setopt magic_equal_subst # even option args are complemented
+setopt auto_param_slash # insert / after a complemented directory name
+setopt list_packed # use compackt style candidates viewer mode
+setopt list_types # show kinds of file using marks
+setopt noautoremoveslash # don't automatically remove / on the tail
+setopt correct # do spell check
+
+### moving settings
+setopt no_hup # keep processs when logging out
+setopt checkjobs # check background job when logging out
+setopt notify # immediately notify when backgroung job finishes
+setopt auto_cd # change direcroty with it's name
+setopt auto_pushd  # execute pushd command when current directory is
+setopt pushd_ignore_dups # make pushd command ignore duplicated directories
+
+### history settings
+HISTFILE=$HOME/.zsh-history # history file
+HISTSIZE=10000 # number of saved history on memory
+SAVEHIST=10000 # number of saved history
+setopt extended_history # current time is also saved
+setopt hist_ignore_dups
+setopt hist_reduce_blanks
+setopt hist_no_store
+setopt hist_ignore_space
+setopt extended_history # current time is also saved
+setopt share_history # share history across multi processes
+setopt append_history
+setopt inc_append_history
+setopt hist_verify # can edit history before execute it
+setopt hist_save_no_dups
+setopt hist_expand
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
+bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
+function history-all { history -E 1 }
+
+### coloring errors of make
+e_normal=`echo -e "\033[0;30m"`
+e_RED=`echo -e "\033[1;31m"`
+e_BLUE=`echo -e "\033[1;36m"`
+function make() {
+    LANG=C command make "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot\sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"
+}
+
+### cdr
+autoload -Uz is-at-least
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-max 5000
+zstyle ':chpwd:*' recent-dirs-default yes
+zstyle ':completion:*' recent-dirs-insert both
+
+### peco
+function peco-select-history() {
+  typeset tac
+  if which tac > /dev/null; then
+    tac=tac
+  else
+    tac='tail -r'
+  fi
+  BUFFER=$(fc -l -n 1 | eval $tac | peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle -R -c
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+function peco-cdr () {
+    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-cdr
+bindkey '^@' peco-cdr
+
+### extract compressed files
+function extract() {
+  case $1 in
+    *.tar.gz|*.tgz) tar xzvf $1;;
+    *.tar.xz) tar Jxvf $1;;
+    *.zip) unzip $1;;
+    *.lzh) lha e $1;;
+    *.tar.bz2|*.tbz) tar xjvf $1;;
+    *.tar.Z) tar zxvf $1;;
+    *.gz) gzip -dc $1;;
+    *.bz2) bzip2 -dc $1;;
+    *.Z) uncompress $1;;
+    *.tar) tar xvf $1;;
+    *.arj) unarj $1;;
+  esac
+}
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+
+### display ll with enter
+function do_enter() {
+    if [ -n "$BUFFER" ]; then
+        zle accept-line
+        return 0
+    fi
+    echo
+    ll
+    zle reset-prompt
+    return 0
+}
+zle -N do_enter
+bindkey '^m' do_enter
+bindkey '^j' do_enter
+
+### not save ll, cd, man, etc.. in history
+zshaddhistory() {
+  local line=${1%%$'\n'}
+  local cmd=${line%% *}
+  [[ ${#line} -ge 5 && ${cmd} != (ll|cd|man) ]]
+}

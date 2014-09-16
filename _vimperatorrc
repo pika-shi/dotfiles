@@ -1,0 +1,32 @@
+nnoremap s :set<Space>cpt=s<CR>:tabopen<Space>google<Space>
+nnoremap t :set<Space>cpt=lt<CR>:tabopen<Space>
+nnoremap o :set<Space>cpt=lt<CR>:open<Space>
+
+set defsearch=google
+set maxitems=10
+set ignorecase
+set showstatuslinks=2
+set maxitems=10
+
+set noerrorbells
+set focuscontent
+
+cnoremap <Up> <S-Tab>
+cnoremap <Down> <Tab>
+
+noremap j 5j
+noremap k 5k
+
+noremap <S-j> 100%
+noremap <S-k> gg
+
+noremap h <C-p>
+noremap l <C-n>
+
+style chrome://* <<EOM
+#liberator-commandline { /* command line */
+    font-family: Menlo, "M+1VM+IPAG circle", Monaco, monospace !important;
+    font-weight: normal !important;
+    font-size: 10pt !important;
+}
+EOM

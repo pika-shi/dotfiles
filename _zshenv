@@ -1,0 +1,48 @@
+### environment variables
+export LANG="ja_JP.UTF-8"
+export LC_ALL=ja_jp.UTF-8
+export LESSCHARSET=utf-8
+export JLESSCHARSET=japanese
+export OUTPUT_CHARSET=utf-8
+
+### path settings
+typeset -U path fpath
+
+path=(
+  ~/bin(N-/)
+  ~/local/bin(N-/)
+  ~/.cask/bin(N-/)
+  ~/.go/bin(N-/)
+  /usr/local/bin(N-/)
+  /usr/bin(N-/)
+  /bin(N-/)
+  /usr/local/go/bin(N-/)
+)
+
+fpath=(
+  ~/.zsh/completion/zsh-completions(N-/)
+  $fpath
+)
+
+typeset -xT SUDO_PATH sudo_path
+typeset -U sudo_path
+
+sudo_path=(
+  /usr/local/sbin(N-/)
+  /usr/sbin(N-/)
+  /sbin(N-/)
+)
+
+# golang
+export GOROOT="/usr/local/go"
+export GOPATH="~/.go"
+
+# source-highlight
+export LESS='-R'
+export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
+
+### editor settings
+export EDITOR=vim
+if ! type vim > /dev/null 2>&1; then
+  alias vim=vi
+fi
