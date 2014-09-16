@@ -73,6 +73,7 @@ def set_symlinks():
                  ('_gitconfig', '~/.gitconfig'),
                  ('_gitattributes', '~/.gitattributes')]
   if 'localhost' in env.hosts:
+    path_list.append(('_vimperatorrc', '~/.vimperatorrc'))
     path_list.append(('karabiner.xml',
                       '~/Library/Application Support/Karabiner/private.xml'))
     path_list.append(('/usr/local/Library/Contributions/brew_zsh_completion.zsh',
