@@ -11,6 +11,7 @@ select_package('apt')
 @task
 def main():
   setup_packages()
+  install_go()
   install_pip()
   fetch_dotfiles()
   set_symlinks()
