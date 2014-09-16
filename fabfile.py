@@ -66,6 +66,7 @@ def fetch_dotfiles():
 def set_symlinks():
   with cd('dotfiles'):
     path_list = [('_zshrc', '~/.zshrc'),
+                 ('_zshenv', '~/.zshenv'),
                  ('_tmux.conf', '~/.tmux.conf'),
                  ('_vimrc', '~/.vimrc'),
                  ('_vim', '~/.vim'),
@@ -73,6 +74,7 @@ def set_symlinks():
                  ('_gitconfig', '~/.gitconfig'),
                  ('_gitattributes', '~/.gitattributes')]
   if 'localhost' in env.hosts:
+    path_list.append(('_zshrc.osx', '~/.zshrc.osx'))
     path_list.append(('_vimperatorrc', '~/.vimperatorrc'))
     path_list.append(('karabiner.xml',
                       '~/Library/Application Support/Karabiner/private.xml'))
