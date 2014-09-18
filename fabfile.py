@@ -16,6 +16,7 @@ def main():
   fetch_dotfiles()
   set_symlinks()
   change_shell()
+  complete_brew()
 
 @task
 def setup_packages():
@@ -89,3 +90,8 @@ def set_symlinks():
 def change_shell():
   run('sed -i "s/^\(.*pam_shells.so$\)/#\1/" /etc/pam.d/chsh')
   run('zsh')
+
+@task
+def complete_brew():
+  with cd('/usr/local/share/zsh/site-functions'):
+    run('ln -sf ../../../Library/Contributions/brew_zsh_completion.zsh _brew')
