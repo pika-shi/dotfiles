@@ -1,0 +1,12 @@
+VimClojure
+neobundle.vim
+neocomplcache
+neosnippet
+syntastic
+unite.vim
+vim-arduino-syntax
+vim-slime
+vimfiler.vim
+vimproc
+vimshell
+vimshell.vim
