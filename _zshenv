@@ -35,7 +35,7 @@ sudo_path=(
 
 # golang
 export GOROOT="/usr/local/go"
-export GOPATH="~/.go"
+export GOPATH=~/.go
 
 # source-highlight
 export LESS='-R'

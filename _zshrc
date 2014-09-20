@@ -28,7 +28,7 @@ alias df='dfc'
 alias du='du -h'
 alias ll='ls -Flh'
 alias python='python -B'
-alias cat='pygmentize -O style=monokai -f console256 -g'
+alias catt='pygmentize -O style=monokai -f console256 -g'
 alias sudo='env PATH=${PATH}:/sbin:/usr/sbin:/usr/local/sbin \sudo'
 
 #git
