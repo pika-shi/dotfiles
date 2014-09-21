@@ -13,7 +13,6 @@ def main(package='apt', git=0):
   fetch_dotfiles(git)
   set_symlinks()
   change_shell()
-  complete_brew()
   install_go()
   install_pip()
 
@@ -93,9 +92,3 @@ def set_symlinks():
 @task
 def change_shell():
     sudo('sed -i "s/^\(.*pam_shells.so$\)/#\1/" /etc/pam.d/chsh')
-
-@task
-def complete_brew():
-  if run('uname') == 'Darwin':
-    with cd('/usr/local/share/zsh/site-functions'):
-      run('ln -sf ../../../Library/Contributions/brew_zsh_completion.zsh _brew')
