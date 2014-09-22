@@ -4,7 +4,7 @@ set wrap
 set softtabstop=2
 set shiftwidth=2
 set expandtab
-set formatoptions=-ro
+set formatoptions-=ro
 set tabstop=4
 set wrapmargin=0
 set textwidth=99
@@ -33,4 +33,16 @@ augroup FileTypePlugin
     au FileType vimfiler   setlocal nonu
     au FileType vimshell   setlocal nonu
     au FileType zsh        setlocal ts=2 sts=2 sw=2
+augroup END
+
+augroup FileTypeDetect
+    au!
+    au BufRead,BufNewFile *.json                set filetype=javascript
+    au BufRead,BufNewFile *.md                  set filetype=markdown
+    au BufRead,BufNewFile .tmux.conf,tmux.conf  set filetype=tmux
+    au BufRead,BufNewFile *.jade                set filetype=jade
+    au BufRead,BufNewFile *.less                set filetype=less
+    au BufRead,BufNewFile *.coffee              set filetype=coffee
+    au BufRead,BufNewFile *.scss                set filetype=scss
+    au BufRead,BufNewFile *.ts                  set filetype=typescript
 augroup END
