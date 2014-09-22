@@ -14,10 +14,6 @@ set ruler
 set foldmethod=marker
 set colorcolumn+=81
 
-if has("mouse")
-  set mouse=a
-endif
-
 augroup cch
     autocmd!
     autocmd WinLeave * set nocursorline
