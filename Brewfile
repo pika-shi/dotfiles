@@ -1,7 +1,7 @@
-update || true
+update
 
-tap homebrew/binary || true
-tap phinze/homebrew-cask || true
+tap homebrew/binary
+tap phinze/homebrew-cask
 
 install ag || true
 install direnv || true
@@ -14,14 +14,15 @@ install jenkins || true
 install jq || true
 install lftp || true
 install node || true
+install peco || true
 install sl || true
 install source-highlight || true
 install tig || true
 install tmux || true
 install tree || true
+install vim || true
 install wget || true
 install zsh || true
-install peco || true
 
 install brew-cask || true
 cask install arduino || true
@@ -48,7 +49,7 @@ cask install vagrant || true
 cask install witch || true
 cask install xtrafinder || true
 
-cask alfred link || true
-linkapps || true
+cask alfred link
+linkapps
 
-cleanup || true
+cleanup
