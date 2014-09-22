@@ -15,6 +15,17 @@ set wildmenu
 set wildmode=list:longest,full
 set completeopt=menu,menuone
 set nrformats=
+set history=100
+set ignorecase
+set smartcase
+set wrapscan
+set incsearch
+set hlsearch
+
+augroup Search
+    autocmd!
+    autocmd QuickFixCmdPost *grep cwindow
+augroup END
 
 au BufNewFile *.html 0r ~/.vim/templates/tmp.html
 au BufNewFile *.py 0r ~/.vim/templates/tmp.py
