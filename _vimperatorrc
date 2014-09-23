@@ -29,4 +29,3 @@ style chrome://* <<EOM
     font-weight: normal !important;
     font-size: 10pt !important;
 }
-EOM

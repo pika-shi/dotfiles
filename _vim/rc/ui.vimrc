@@ -2,24 +2,18 @@ syntax on
 
 set listchars=tab:▸\ ,eol:¬
 set list
-set showcmd                 " display incomplete commands
-set number                  " line numbers
-set cmdheight=1             " command line height
-set shortmess=altoO         " shorten messages
-set scrolloff=5             " Keep at least 5 lines above and below the cursor
-set laststatus=2            " The last window always have status line
-set showmatch               " brackets/braces that is
-set matchtime=3             " duration to show matching brace (1/10 sec)
-set ruler                   " show the cursor position all the time
+set showcmd
+set number
+set cmdheight=1
+set shortmess=altoO
+set scrolloff=5
+set laststatus=2
+set showmatch
+set matchtime=3
+set ruler
 set foldmethod=marker
-execute "set colorcolumn=" . join(range(81, 9999), ',')
-set colorcolumn+=1
+set colorcolumn+=81
 
-if has("mouse") " Enable the use of the mouse in all modes
-  set mouse=a
-endif
-
-" highlight cursor line in current window
 augroup cch
     autocmd!
     autocmd WinLeave * set nocursorline
@@ -27,3 +21,10 @@ augroup cch
 augroup END
 highlight clear CursorLine
 highlight CursorLine ctermbg=black
+
+augroup whitespace
+    autocmd!
+    autocmd VimEnter,WinEnter * match WhitespaceEOL /\s\+$/
+augroup END
+highlight WhitespaceEOL ctermbg=red guibg=red
+highlight CursorLineNr ctermfg=DarkYellow guifg=DarkYellow

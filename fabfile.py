@@ -13,7 +13,6 @@ def main(package='apt', git=0):
   fetch_dotfiles(git)
   set_symlinks()
   change_shell()
-  complete_brew()
   install_go()
   install_pip()
 
@@ -79,25 +78,17 @@ def set_symlinks():
                  ('dotfiles/_gitignore', '.gitignore'),
                  ('dotfiles/_gitconfig', '.gitconfig'),
                  ('dotfiles/_gitattributes', '.gitattributes')]
-  if run('uname') == 'Darwin':
-    path_list.append(('dotfiles/_zshrc.osx', '.zshrc.osx'))
-    path_list.append(('dotfiles/_vimperatorrc', '.vimperatorrc'))
-    path_list.append(('dotfiles/karabiner.xml',
-                      'Library/Application Support/Karabiner/private.xml'))
-    path_list.append(('/usr/local/Library/Contributions/brew_zsh_completion.zsh',
-                      '/usr/local/share/zsh/site-functions/_brew'))
+    if run('uname') == 'Darwin':
+      path_list.append(('dotfiles/_zshrc.osx', '.zshrc.osx'))
+      path_list.append(('dotfiles/_vimperatorrc', '.vimperatorrc'))
+      path_list.append(('dotfiles/karabiner.xml',
+                        'Library/Application Support/Karabiner/private.xml'))
+      path_list.append(('/usr/local/Library/Contributions/brew_zsh_completion.zsh',
+                        '/usr/local/share/zsh/site-functions/_brew'))
 
-  with cd('~/'):
     for path_set in path_list:
       run('ln -sf {0} {1}'.format(path_set[0], path_set[1]))
 
 @task
 def change_shell():
-  with cd('~/'):
     sudo('sed -i "s/^\(.*pam_shells.so$\)/#\1/" /etc/pam.d/chsh')
-
-@task
-def complete_brew():
-  if run('uname') == 'Darwin':
-    with cd('/usr/local/share/zsh/site-functions'):
-      run('ln -sf ../../../Library/Contributions/brew_zsh_completion.zsh _brew')

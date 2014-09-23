@@ -1,22 +1,22 @@
-let mapleader=','           " Lead with ,
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
 
-" Jump to vimrc
-nnoremap <space>v :<C-u>edit $HOME/.vimrc<CR>
-" Reload vimrc setting
-nnoremap <space>s :<C-u>source $HOME/.vimrc<CR>
-" Create new tab
-cnoremap <C-t> <C-u>tabnew<CR>
-nnoremap <C-h> :<C-u>tabprevious<CR>
-nnoremap <C-l> :<C-u>tabnext<CR>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
 
-" Move to n-th tab by Cmd-n
-map <D-1> 1gt
-map <D-2> 2gt
-map <D-3> 3gt
-map <D-4> 4gt
-map <D-5> 5gt
-map <D-6> 6gt
-map <D-7> 7gt
-map <D-8> 8gt
-map <D-9> 9gt
-map <D-0> :tablast<CR>
+inoremap <silent> <C-b> <C-g>u<C-h>
+inoremap <silent> <C-d> <Del>
+
+inoremap { {}<Left>
+inoremap [ []<Left>
+inoremap ( ()<Left>
+inoremap " ""<Left>
+inoremap ' ''<Left>
+inoremap <> <><Left>
+
+vnoremap v $h
+
