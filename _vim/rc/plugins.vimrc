@@ -50,21 +50,23 @@ elseif neobundle#is_installed('neocomplcache')
     let g:neocomplcache_enable_underbar_completion = 1
 endif
 
-NeoBundleLazy "davidhalter/jedi-vim", {
-      \ "autoload": {
-      \   "filetypes": ["python", "python3"],
-      \ },
-      \ "build": {
-      \   "mac": "pip install jedi",
-      \   "unix": "pip install jedi",
-      \ }}
-let s:hooks = neobundle#get_hooks("jedi-vim")
-function! s:hooks.on_source(bundle)
-  let g:jedi#auto_vim_configuration = 0
-  let g:jedi#popup_select_first = 0
-  let g:jedi#rename_command = '<Leader>R'
-  let g:jedi#goto_command = '<Leader>G'
-endfunction
+if has('python')
+    NeoBundleLazy "davidhalter/jedi-vim", {
+                \ "autoload": {
+                \   "filetypes": ["python", "python3"],
+                \ },
+                \ "build": {
+                \   "mac": "pip install jedi",
+                \   "unix": "pip install jedi",
+                \ }}
+    let s:hooks = neobundle#get_hooks("jedi-vim")
+    function! s:hooks.on_source(bundle)
+        let g:jedi#auto_vim_configuration = 0
+        let g:jedi#popup_select_first = 0
+        let g:jedi#rename_command = '<Leader>R'
+        let g:jedi#goto_assignments_command = '<Leader>G'
+   endfunction
+endif
 
 filetype plugin indent on
 syntax on
