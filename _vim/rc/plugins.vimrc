@@ -27,7 +27,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle "sudar/vim-arduino-syntax"
 NeoBundle "thinca/vim-quickrun"
 
-NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
+""NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
 if neobundle#is_installed('neocomplete')
     " neocomplete用設定
     let g:neocomplete#enable_at_startup = 1
