@@ -2,6 +2,8 @@ set nocompatible
 set clipboard+=unnamed
 set helplang=ja,en
 set shiftround
+set infercase
+set hidden
 set virtualedit=block
 set ambiwidth=double
 set autoread
@@ -10,8 +12,9 @@ set nolazyredraw
 set report=0
 set encoding=utf-8
 set fileformats=unix,mac,dos
-set backup
-set writebackup
+set nobackup
+set nowritebackup
+set noswapfile
 
 if !filewritable($HOME."/.vim-backup")
   call mkdir($HOME."/.vim-backup", "p")

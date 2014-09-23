@@ -12,7 +12,6 @@
 
 source $HOME/.vim/rc/general.vimrc
 source $HOME/.vim/rc/behavior.vimrc
-source $HOME/.vim/rc/mapping.vimrc
 source $HOME/.vim/rc/ui.vimrc
-source $HOME/.vim/rc/search.vimrc
 source $HOME/.vim/rc/plugins.vimrc
+source $HOME/.vim/rc/mapping.vimrc
