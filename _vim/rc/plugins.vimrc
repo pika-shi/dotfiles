@@ -26,45 +26,48 @@ NeoBundle 'jpalardy/vim-slime'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle "sudar/vim-arduino-syntax"
 NeoBundle "thinca/vim-quickrun"
+NeoBundle 'scrooloose/syntastic'
 
-NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
-if neobundle#is_installed('neocomplete')
-    " neocomplete用設定
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_ignore_case = 1
-    let g:neocomplete#enable_smart_case = 1
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns._ = '\h\w*'
-elseif neobundle#is_installed('neocomplcache')
-    " neocomplcache用設定
-    let g:neocomplcache_enable_at_startup = 1
-    let g:neocomplcache_enable_ignore_case = 1
-    let g:neocomplcache_enable_smart_case = 1
-    if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns._ = '\h\w*'
-    let g:neocomplcache_enable_camel_case_completion = 1
-    let g:neocomplcache_enable_underbar_completion = 1
-endif
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 
-NeoBundleLazy "davidhalter/jedi-vim", {
-      \ "autoload": {
-      \   "filetypes": ["python", "python3"],
-      \ },
-      \ "build": {
-      \   "mac": "pip install jedi",
-      \   "unix": "pip install jedi",
-      \ }}
-let s:hooks = neobundle#get_hooks("jedi-vim")
-function! s:hooks.on_source(bundle)
-  let g:jedi#auto_vim_configuration = 0
-  let g:jedi#popup_select_first = 0
-  let g:jedi#rename_command = '<Leader>R'
-  let g:jedi#goto_command = '<Leader>G'
-endfunction
+""NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
+""if neobundle#is_installed('neocomplete')
+""    " neocomplete用設定
+""    let g:neocomplete#enable_at_startup = 1
+""    let g:neocomplete#enable_ignore_case = 1
+""    let g:neocomplete#enable_smart_case = 1
+""    if !exists('g:neocomplete#keyword_patterns')
+""        let g:neocomplete#keyword_patterns = {}
+""    endif
+""    let g:neocomplete#keyword_patterns._ = '\h\w*'
+""elseif neobundle#is_installed('neocomplcache')
+""    " neocomplcache用設定
+""    let g:neocomplcache_enable_at_startup = 1
+""    let g:neocomplcache_enable_ignore_case = 1
+""    let g:neocomplcache_enable_smart_case = 1
+""    if !exists('g:neocomplcache_keyword_patterns')
+""        let g:neocomplcache_keyword_patterns = {}
+""    endif
+""    let g:neocomplcache_keyword_patterns._ = '\h\w*'
+""    let g:neocomplcache_enable_camel_case_completion = 1
+""    let g:neocomplcache_enable_underbar_completion = 1
+""endif
+
+""NeoBundleLazy "davidhalter/jedi-vim", {
+""      \ "autoload": {
+""      \   "filetypes": ["python", "python3"],
+""      \ },
+""      \ "build": {
+""      \   "mac": "pip install jedi",
+""      \   "unix": "pip install jedi",
+""      \ }}
+""let s:hooks = neobundle#get_hooks("jedi-vim")
+""function! s:hooks.on_source(bundle)
+""  let g:jedi#auto_vim_configuration = 0
+""  let g:jedi#popup_select_first = 0
+""  let g:jedi#rename_command = '<Leader>R'
+""  let g:jedi#goto_command = '<Leader>G'
+""endfunction
 
 filetype plugin indent on
 syntax on
