@@ -4,72 +4,52 @@ filetype plugin indent off
 if has('vim_starting')
       set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
+
 let s:neobundle_dir = expand('~/.vim/bundle/')
 call neobundle#rc(s:neobundle_dir)
 
 " originalrepos on github
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle "Shougo/vimproc", { "build": {
-  \   "mac"   : "make -f make_mac.mak",
-  \   "unix"  : "make -f make_unix.mak",
+NeoBundle 'Shougo/vimproc', {
+  \ 'build': {
+  \   'mac'   : 'make -f make_mac.mak',
+  \   'unix'  : 'make -f make_unix.mak',
   \ }}
 
-NeoBundle 'VimClojure'
-NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'jpalardy/vim-slime'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'sudar/vim-arduino-syntax'
+NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle "sudar/vim-arduino-syntax"
-NeoBundle "thinca/vim-quickrun"
-NeoBundle 'scrooloose/syntastic'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'surround.vim'
 
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+"" unite.vim
+let g:unite_enable_start_insert=1
+let g:unite_source_history_yank_enable =1
 
-""NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
-""if neobundle#is_installed('neocomplete')
-""    " neocomplete用設定
-""    let g:neocomplete#enable_at_startup = 1
-""    let g:neocomplete#enable_ignore_case = 1
-""    let g:neocomplete#enable_smart_case = 1
-""    if !exists('g:neocomplete#keyword_patterns')
-""        let g:neocomplete#keyword_patterns = {}
-""    endif
-""    let g:neocomplete#keyword_patterns._ = '\h\w*'
-""elseif neobundle#is_installed('neocomplcache')
-""    " neocomplcache用設定
-""    let g:neocomplcache_enable_at_startup = 1
-""    let g:neocomplcache_enable_ignore_case = 1
-""    let g:neocomplcache_enable_smart_case = 1
-""    if !exists('g:neocomplcache_keyword_patterns')
-""        let g:neocomplcache_keyword_patterns = {}
-""    endif
-""    let g:neocomplcache_keyword_patterns._ = '\h\w*'
-""    let g:neocomplcache_enable_camel_case_completion = 1
-""    let g:neocomplcache_enable_underbar_completion = 1
-""endif
+nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 
-""NeoBundleLazy "davidhalter/jedi-vim", {
-""      \ "autoload": {
-""      \   "filetypes": ["python", "python3"],
-""      \ },
-""      \ "build": {
-""      \   "mac": "pip install jedi",
-""      \   "unix": "pip install jedi",
-""      \ }}
-""let s:hooks = neobundle#get_hooks("jedi-vim")
-""function! s:hooks.on_source(bundle)
-""  let g:jedi#auto_vim_configuration = 0
-""  let g:jedi#popup_select_first = 0
-""  let g:jedi#rename_command = '<Leader>R'
-""  let g:jedi#goto_command = '<Leader>G'
-""endfunction
+au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+
+"" vimfiler.vim
+nnoremap <silent> ,vf :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
+
+"" syntastic
+let g:syntastic_python_checkers = ['flake8', 'pylint']
 
 filetype plugin indent on
+colorscheme hybrid
 syntax on
 
 " Installation check

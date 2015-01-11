@@ -1,4 +1,6 @@
-set nocompatible
+set encoding=utf-8
+scriptencoding utf-8
+
 set clipboard+=unnamed
 set helplang=ja,en
 set shiftround
@@ -10,7 +12,6 @@ set autoread
 set visualbell t_vb=
 set nolazyredraw
 set report=0
-set encoding=utf-8
 set fileformats=unix,mac,dos
 set nobackup
 set nowritebackup

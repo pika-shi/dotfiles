@@ -12,4 +12,3 @@ inoremap <silent> <C-b> <C-g>u<C-h>
 inoremap <silent> <C-d> <Del>
 
 vnoremap v $h
-
