@@ -205,3 +205,12 @@ zshaddhistory() {
   local cmd=${line%% *}
   [[ ${#line} -ge 5 && ${cmd} != (ll|cd|man) ]]
 }
+
+
+# $ git-ignore ruby
+function git-ignore() { curl -s https://www.gitignore.io/api/$@ ;}
+
+# $ git-ignore-list
+function git-ignore-list() {
+git-ignore `git-ignore list | ruby -ne 'puts $_.split(",")' | peco`
+}
