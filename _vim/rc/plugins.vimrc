@@ -27,8 +27,22 @@ NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'surround.vim'
+
+
+NeoBundle "Shougo/neocomplete.vim"
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_ignore_case = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#enable_auto_select = 1
+  let g:neocomplete#enable_enable_camel_case_completion = 0
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns._ = '\h\w*'
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 "" unite.vim
 let g:unite_enable_start_insert=1
@@ -49,6 +63,7 @@ nnoremap <silent> ,vf :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
 let g:syntastic_python_checkers = ['flake8', 'pylint']
 
 filetype plugin indent on
+set background=dark
 colorscheme hybrid
 syntax on
 

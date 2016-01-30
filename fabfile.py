@@ -1,80 +1,110 @@
 # -*- encoding:utf-8 -*-
 
-from fabric.api import env, settings
+from fabric.api import env, shell_env, settings
 from fabric.decorators import task, parallel
 from fabric.contrib.files import exists
-from cuisine import mode_sudo, select_package, run, sudo, package_ensure, dir_exists, cd
+from fabric.colors import white
+from cuisine import mode_sudo, select_package, run, sudo, package_ensure, dir_exists, file_exists, cd
 
 env.warn_only = True
 env.use_ssh_config = True
+#env.key_filename = '~/.ssh/id_rsa'
 
 @task(default=True)
+@parallel
 def main():
-    install_packages()
-    fetch_dotfiles()
+    install_linux_packages()
+    install_go_packages()
+    install_python27()
+    install_python_packages()
+    clone_dotfiles()
     set_symlinks()
-    install_go()
-    install_pip()
+    #change_shell()
 
 
 @task(alias='pkg')
 @parallel
-def install_packages():
+def install_linux_packages():
+    print white('--- install linux packages ---', bold=True)
     if exists('/etc/lsb-release'):
-        package = 'apt'  # Ubuntu
-    elif exists('/etc/redhat-release'):
-        package = 'yum'  # RedHat
-
-    select_package(package)
-
-    with settings(mode_sudo()):
-        run('{} -y update'.format(package))
+        manager = 'apt'  # Ubuntu
         packages = '''
-            ag jq tig dfc zsh git tree tmux unzip nodejs golang
-            source-highlight silversearcher-ag
+            jq tig dfc zsh git tree tmux unzip nodejs golang
+            source-highlight silversearcher-ag vim zlib1g-dev libssl-dev
         '''.split()
+    elif exists('/etc/redhat-release'):
+        manager = 'yum'  # RedHat
+        packages = '''
+            jq tig dfc zsh git tree tmux unzip nodejs golang
+            source-highlight vim zlib-devel openssl-devel
+        '''.split()
+    select_package(manager)
+    with settings(mode_sudo()):
+        run('{} -y update'.format(manager))
 	map(lambda _: package_ensure(_), packages)
 
 
 @task(alias='go')
 @parallel
-def install_go():
-    if not dir_exists('/usr/local/go'):
-        run('wget https://go.googlecode.com/files/go1.2rc2.linux-amd64.tar.gz')
+def install_go_packages():
+    print white('--- install go packages ---', bold=True)
+    with shell_env(GOPATH='/home/{}/.go'.format(run('whoami'))):
+        run('go get github.com/peco/peco/cmd/peco')
+        run('go get github.com/motemen/ghq')
+
+
+@task(alias='python')
+@parallel
+def install_python27():
+    print white('--- install python2.7 ---', bold=True)
+    #if not file_exists('/usr/local/bin/python2.7'):
+    with cd('~/'):
+        run('curl -O https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz')
+        run('tar zxvf Python-2.7.9.tgz')
+    with cd('/home/{}/Python-2.7.9'.format(run('whoami'))):
+        run('./configure')
+        run('make')
+        sudo('make install')
+    with cd('~/'):
+        run('rm Python-2.7.9.tgz')
+        run('rm -rf Python-2.7.9')
+
+
+@task(alias='pip')
+@parallel
+def install_python_packages():
+    print white('--- install python packages ---', bold=True)
+    if not file_exists('/usr/bin/pip'):
+        run('wget https://bootstrap.pypa.io/get-pip.py')
         with settings(mode_sudo()):
-            run('tar zxvf go1.2rc2.linux-amd64.tar.gz -C /usr/local')
-            run('export PATH=$PATH:/usr/local/go/bin')
-            run('go get github.com/peco/peco/cmd/peco')
-            run('go get github.com/motemen/ghq')
+            run('/usr/local/bin/python2.7 get-pip.py')
+            run('rm get-pip.py')
+        with settings(mode_sudo()):
+            run('ln -sf /usr/local/bin/pip /usr/bin/pip')
+            run('pip install ipython')
+            run('pip install virtualenv')
+            run('pip install Pygments')
 
 
 @task
 @parallel
-def install_pip():
-    run('wget https://bootstrap.pypa.io/get-pip.py')
-    with settings(mode_sudo()):
-        run('python get-pip.py')
-        run('rm get-pip.py')
-        run('pip install ipython')
-        run('pip install Pygments')
-
-@task
-@parallel
-def fetch_dotfiles():
+def clone_dotfiles():
+    print white('--- clone dotfiles ---', bold=True)
     if not dir_exists('dotfiles'):
         run('git clone --recursive https://github.com/pika-shi/dotfiles.git')
 
 
 @task
-@parallel
 def set_symlinks():
+    print white('--- set symlinks ---', bold=True)
     with cd('~/'):
         dotfiles = '''
             zshrc zshenv tmux.conf vimrc vim gitignore gitconfig gitattributes
         '''.split()
+        map(lambda _: run('ln -sf dotfiles/_{0} .{0}'.format(_)), dotfiles)
 
-    if run('uname') == 'Darwin':
-        dotfiles += '''zshrc.osx vimparatorrc'''.split()
 
-    for dotfile in dotfiles:
-        run('ln -sf dotfiles/_{0} .{0}'.format(dotfile))
+@task
+def change_shell():
+    print white('--- change shell ---', bold=True)
+    run('chsh -s /bin/zsh')

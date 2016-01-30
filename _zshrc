@@ -15,6 +15,7 @@
 case ${OSTYPE} in
   darwin*)
     source ~/.zshrc.osx
+    source ~/.zsh/zsh-notify/notify.plugin.zsh
     ;;
 esac
 
@@ -166,6 +167,19 @@ function peco-cdr () {
 zle -N peco-cdr
 bindkey '^@' peco-cdr
 
+# ghq
+function peco-src () {
+  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-src
+bindkey '^g' peco-src
+
+
 ### extract compressed files
 function extract() {
   case $1 in
@@ -214,3 +228,6 @@ function git-ignore() { curl -s https://www.gitignore.io/api/$@ ;}
 function git-ignore-list() {
 git-ignore `git-ignore list | ruby -ne 'puts $_.split(",")' | peco`
 }
+
+export NVM_DIR="/Users/pika_shi/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

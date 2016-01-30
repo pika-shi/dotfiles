@@ -1,4 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/home/pika_shi/dotfiles/_vim'
-let g:netrw_dirhist_2='/Users/pika_shi/develop/dotfiles/_vim'
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/pika_shi/.ghq/github.com/Folio-sec/corporate-site/test/roles'
+let g:netrw_dirhist_2='/Users/pika_shi/develop/dotfiles/_zsh'
+let g:netrw_dirhist_3='/private/etc'
+let g:netrw_dirhist_4='/Users/pika_shi/develop/dotfiles'

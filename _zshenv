@@ -1,6 +1,6 @@
 ### environment variables
 export LANG="ja_JP.UTF-8"
-export LC_ALL=ja_jp.UTF-8
+export LC_ALL=ja_JP.UTF-8
 export LESSCHARSET=utf-8
 export JLESSCHARSET=japanese
 export OUTPUT_CHARSET=utf-8
@@ -46,3 +46,6 @@ export EDITOR=vim
 if ! type vim > /dev/null 2>&1; then
   alias vim=vi
 fi
+
+# node settings
+export PATH=${PATH}:/Users/pika_shi/develop/node_modules/.bin
