@@ -28,6 +28,8 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'mxw/vim-jsx'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'surround.vim'
 
