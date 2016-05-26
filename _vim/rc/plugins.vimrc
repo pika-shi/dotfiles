@@ -32,7 +32,7 @@ NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'surround.vim'
-
+NeoBundle 'itchyny/lightline.vim'
 
 NeoBundle "Shougo/neocomplete.vim"
   let g:neocomplete#enable_at_startup = 1
@@ -49,6 +49,9 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 "" unite.vim
 let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable =1
+
+"" lightline.vim
+let g:lightline = { 'colorscheme': 'wombat' }
 
 nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
 nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
