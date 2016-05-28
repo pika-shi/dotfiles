@@ -49,3 +49,4 @@ fi
 
 # node settings
 export PATH=${PATH}:/Users/pika_shi/develop/node_modules/.bin
+export PATH=$HOME/.nodebrew/current/bin:$PATH
