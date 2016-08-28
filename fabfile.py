@@ -14,10 +14,12 @@ env.use_ssh_config = True
 @parallel
 def main():
     install_linux_packages()
+    install_ruby_packages()
     install_go_packages()
     install_python27()
     install_python_packages()
     clone_dotfiles()
+    clone_tmp()
     set_symlinks()
     #change_shell()
 
@@ -31,6 +33,7 @@ def install_linux_packages():
         packages = '''
             jq tig dfc zsh git tree tmux unzip nodejs golang
             source-highlight silversearcher-ag vim zlib1g-dev libssl-dev
+            python-software-properties software-properties-common
         '''.split()
     elif exists('/etc/redhat-release'):
         manager = 'yum'  # RedHat
@@ -42,6 +45,18 @@ def install_linux_packages():
     with settings(mode_sudo()):
         run('{} -y update'.format(manager))
 	map(lambda _: package_ensure(_), packages)
+        if exists('/etc/lsb-release'):  # tmux 2.0
+            run('add-apt-repository -y ppa:pi-rho/dev')
+            run('apt-get update')
+            run('apt-get install -y tmux=2.0-1~ppa1~t')
+
+
+@task(alias='ruby')
+@parallel
+def install_ruby_packages():
+    print white('--- install ruby packages ---', bold=True)
+    with settings(mode_sudo()):
+        run('gem install tmuxinator')
 
 
 @task(alias='go')
@@ -92,6 +107,14 @@ def clone_dotfiles():
     print white('--- clone dotfiles ---', bold=True)
     if not dir_exists('dotfiles'):
         run('git clone --recursive https://github.com/pika-shi/dotfiles.git')
+
+
+@task
+@parallel
+def clone_tmp():
+    print white('--- clone tmp ---', bold=True)
+    if not dir_exists('.tmux'):
+        run('git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm')
 
 
 @task
