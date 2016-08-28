@@ -32,6 +32,7 @@ NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'surround.vim'
+NeoBundle 'IN3D/vim-raml'
 
 
 NeoBundle "Shougo/neocomplete.vim"

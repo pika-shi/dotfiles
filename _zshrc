@@ -179,6 +179,36 @@ function peco-src () {
 zle -N peco-src
 bindkey '^g' peco-src
 
+function peco-git-branch-checkout () {
+  local selected_branch_name="$(git branch -a | peco | tr -d ' ')"
+  case "$selected_branch_name" in
+    *-\>* )
+        selected_branch_name="$(echo ${selected_branch_name} | perl -ne 's/^.*->(.*?)\/(.*)$/\2/;print')";;
+    remotes* )
+        selected_branch_name="$(echo ${selected_branch_name} | perl -ne 's/^.*?remotes\/(.*?)\/(.*)$/\2/;print')";;
+  esac
+  if [ -n "$selected_branch_name" ]; then
+    BUFFER="git checkout ${selected_branch_name}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-git-branch-checkout
+bindkey '^b' peco-git-branch-checkout
+
+function peco-git-add() {
+    local SELECTED_FILE_TO_ADD="$(git status --porcelain | \
+                                  peco --query "$LBUFFER" | \
+                                  awk -F ' ' '{print $NF}')"
+    if [ -n "$SELECTED_FILE_TO_ADD" ]; then
+      BUFFER="git add $(echo "$SELECTED_FILE_TO_ADD" | tr '\n' ' ')"
+      CURSOR=$#BUFFER
+    fi
+    zle accept-line
+    # zle clear-screen
+}
+zle -N peco-git-add
+bindkey "^a" peco-git-add
 
 ### extract compressed files
 function extract() {
