@@ -208,7 +208,7 @@ function peco-git-add() {
     # zle clear-screen
 }
 zle -N peco-git-add
-bindkey "^a" peco-git-add
+bindkey "^v" peco-git-add
 
 ### extract compressed files
 function extract() {
