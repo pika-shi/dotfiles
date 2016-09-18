@@ -18,8 +18,9 @@ def main():
     install_go_packages()
     install_python27()
     install_python_packages()
+    install_diff_highlight()
     clone_dotfiles()
-    clone_tmp()
+    clone_tpm()
     set_symlinks()
     #change_shell()
 
@@ -100,6 +101,15 @@ def install_python_packages():
             run('pip install virtualenv')
             run('pip install Pygments')
 
+@task
+@parallel
+def install_diff_highlight():
+    print white('--- install diff highlight ---', bold=True)
+    if not file_exists('/usr/local/bin/diff-highlight'):
+        run('wget https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight')
+        with settings(mode_sudo()):
+            run('chmod +x diff-highlight')
+            run('mv diff-highlight /usr/local/bin/diff-highlight')
 
 @task
 @parallel
@@ -111,8 +121,8 @@ def clone_dotfiles():
 
 @task
 @parallel
-def clone_tmp():
-    print white('--- clone tmp ---', bold=True)
+def clone_tpm():
+    print white('--- clone tpm ---', bold=True)
     if not dir_exists('.tmux'):
         run('git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm')
 
