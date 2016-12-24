@@ -10,3 +10,6 @@
 [submodule "_vim/bundle/vimproc"]
 	path = _vim/bundle/vimproc
 	url = https://github.com/Shougo/vimproc
+[submodule "_tmux/plugins/tpm"]
+	path = _tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm

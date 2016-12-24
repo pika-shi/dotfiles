@@ -131,7 +131,7 @@ def install_diff_highlight():
 def clone_dotfiles(dest='.'):
     print white('--- clone dotfiles ---', bold=True)
     if not dir_exists('dotfiles') and console.confirm('Set sshkey to github?'):
-        run('git clone --recursive https://github.com/pika-shi/dotfiles.git {0}'.format(dest))
+        run('git clone --recursive git@github.com:pika-shi/dotfiles.git {0}'.format(dest))
 
 
 @task
