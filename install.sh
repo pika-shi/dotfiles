@@ -16,4 +16,4 @@ pyenv global default
 pyenv exec pip install fabric cuisine ipython
 
 # execute fabric script
-fab setup_mac --initial-password-prompt -H localhost
+fab -f fabfile_local.py -H localhost

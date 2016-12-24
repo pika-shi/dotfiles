@@ -1,13 +1,14 @@
 # -*- encoding:utf-8 -*-
 
-from fabric.api import env, local
+from fabric.api import env, local, lcd
 from fabric.decorators import task
-from fabric.contrib.files import exists, console
+from fabric.contrib import console
 from fabric.colors import white
-from cuisine import sudo, dir_exists, cd
+
 
 env.warn_only = True
-dotfiles_path = '~/.ghq/github.com/pika-shi/dotfiles'
+dotfiles_path = '.ghq/github.com/pika-shi/dotfiles'
+
 
 @task(default=True)
 def main():
@@ -21,16 +22,17 @@ def main():
 @task
 def clone_dotfiles():
     print white('--- clone dotfiles ---', bold=True)
-    if not dir_exists(dotfiles_path) and console.confirm('Set sshkey to github?'):
-        local('git clone --recursive git@github.com:pika-shi/dotfiles.git {0}'.format(dotfiles_path))
+    with lcd('~/'):
+        if console.confirm('Set sshkey to github?'):
+            local('git clone --recursive git@github.com:pika-shi/dotfiles.git {0}'.format(dotfiles_path))
 
 
 @task
 def set_symlinks():
     print white('--- set symlinks ---', bold=True)
-    with cd('~/'):
+    with lcd('~/'):
         dotfiles = '''
-            zshrc zshenv tmux.conf vimrc tmux vim gitignore gitconfig gitattributes mackup.cfg
+	    zshrc zshenv tmux.conf vimrc tmux vim gitignore gitconfig gitattributes mackup.cfg
         '''.split()
         map(lambda _: local('ln -sf {0}/_{1} .{1}'.format(dotfiles_path, _)), dotfiles)
 
@@ -38,6 +40,7 @@ def set_symlinks():
 @task
 def change_shell():
     print white('--- change shell ---', bold=True)
+    local('echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells')
     local('chsh -s /usr/local/bin/zsh')
 
 
@@ -50,7 +53,7 @@ def restore_mackup():
 @task
 def set_mac_environment():
     print white('--- set mac environment ---', bold=True)
-    sudo('nvram SystemAudioVolume=%80')
+    local('nvram SystemAudioVolume=%80')
 
     local('defaults write com.apple.dock autohide -bool true')
     local('defaults write com.apple.dock autohide-delay -float 0')
