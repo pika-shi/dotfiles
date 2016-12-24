@@ -1,35 +1,22 @@
 cask_args appdir: '/Applications'
+tap 'homebrew/boneyard'
 
-brew 'ag'
-brew 'ansible'
-brew 'ctags'
-brew 'direnv'
-brew 'ghq'
-brew 'hub'
-brew 'imagemagic'
-brew 'jenkins'
-brew 'jq'
-brew 'lftp'
-brew 'nkf'
-brew 'nodebrew'
-brew 'peco'
-brew 'pyenv'
-brew 'reattach-to-user-namespace'
-brew 'rvenv'
-brew 'source-highlight'
-brew 'swiftlint'
-brew 'terminal-notifier'
-brew 'tig'
-brew 'tmux'
-brew 'tree'
-brew 'vim', args: ['with-lua', 'with-luajit']
-brew 'wget'
-brew 'zsh'
-
-tap 'caskroom/cask'
+mas 'alfred', id: 405843582
+mas 'desktop-calendar-plus', id: 524688159
+mas 'evernote', id: 406056744
+mas 'fotor-photo-editor', id: 503039729
+mas 'jpegmini-lite', id: 525742250
+mas 'kobito', id: 896624060
+mas 'line', id: 539883307
+mas 'live-wallpaper', id: 531123879
+mas 'menutab-pro-for-facebook', id: 426843868
+mas 'slack', id: 803453959
+mas 'toyviewer', id: 414298354
+mas 'xcode', id: 497799835
 
 cask 'android-studio'
 cask 'appcleaner'
+cask 'arduino'
 cask 'blisk'
 cask 'clipmenu'
 cask 'dash'
@@ -42,13 +29,12 @@ cask 'google-drive'
 cask 'google-japanese-ime'
 cask 'insomniax'
 cask 'iterm2'
+cask 'java'
 cask 'karabiner'
 cask 'messenger'
 cask 'sequel-pro'
 cask 'shiftit'
-cask 'sophos-anti-virus-home-edition'
 cask 'sketch'
-cask 'tinkertool'
 cask 'totalspaces'
 cask 'virtualbox'
 cask 'vagrant'
@@ -57,15 +43,31 @@ cask 'witch'
 cask 'xtrafinder'
 cask 'zeplin'
 
-mas 'Alfred', id: 405843582
-mas 'Desktop Calendar Plus', id: 524688159
-mas 'Evernote – stay organized', id: 406056744
-mas 'Fotor Photo Editor', id: 503039729
-mas 'JPEGmini Lite', id: 525742250
-mas 'Kobito', id: 896624060
-mas 'LINE', id: 539883307
-mas 'Live Wallpaper', id: 531123879
-mas 'MenuTab Pro for Facebook', id: 426843868
-mas 'Slack', id: 803453959
-mas 'ToyViewer', id: 414298354
-mas 'Xcode', id: 497799835
+brew 'ag'
+brew 'ansible'
+brew 'ctags'
+brew 'direnv'
+brew 'ghq'
+brew 'git'
+brew 'hub'
+brew 'imagemagic'
+brew 'jenkins'
+brew 'jq'
+brew 'lftp'
+brew 'mackup'
+brew 'nkf'
+brew 'nodebrew'
+brew 'peco'
+brew 'pyenv'
+brew 'reattach-to-user-namespace'
+brew 'rbenv'
+brew 'source-highlight'
+brew 'swiftlint'
+brew 'terminal-notifier'
+brew 'tig'
+brew 'tmux'
+brew 'tree'
+brew 'vim', args: ['with-lua', 'with-luajit']
+brew 'virtualenv'
+brew 'wget'
+brew 'zsh'

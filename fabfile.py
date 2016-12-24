@@ -2,7 +2,7 @@
 
 from fabric.api import env, shell_env, settings
 from fabric.decorators import task, parallel
-from fabric.contrib.files import exists
+from fabric.contrib.files import exists, console
 from fabric.colors import white
 from cuisine import mode_sudo, select_package, run, sudo, package_ensure, dir_exists, file_exists, cd
 
@@ -21,8 +21,21 @@ def main():
     install_diff_highlight()
     clone_dotfiles()
     clone_tpm()
+    generate_sshkey()
     set_symlinks()
     #change_shell()
+
+
+@task
+@parallel
+def setup_mac():
+    dotfiles_path = '~/.ghq/github.com/pika-shi/dotfiles'
+    clone_dotfiles(dotfiles_path)
+    set_symlinks(dotfiles_path)
+    restore_mackup()
+    clone_tpm()
+    change_shell()
+    set_mac_environment()
 
 
 @task(alias='pkg')
@@ -101,6 +114,7 @@ def install_python_packages():
             run('pip install virtualenv')
             run('pip install Pygments')
 
+
 @task
 @parallel
 def install_diff_highlight():
@@ -111,12 +125,13 @@ def install_diff_highlight():
             run('chmod +x diff-highlight')
             run('mv diff-highlight /usr/local/bin/diff-highlight')
 
+
 @task
 @parallel
-def clone_dotfiles():
+def clone_dotfiles(dest='.'):
     print white('--- clone dotfiles ---', bold=True)
-    if not dir_exists('dotfiles'):
-        run('git clone --recursive https://github.com/pika-shi/dotfiles.git')
+    if not dir_exists('dotfiles') and console.confirm('Set sshkey to github?'):
+        run('git clone --recursive https://github.com/pika-shi/dotfiles.git {0}'.format(dest))
 
 
 @task
@@ -128,16 +143,38 @@ def clone_tpm():
 
 
 @task
-def set_symlinks():
+def set_symlinks(src='dotfiles'):
     print white('--- set symlinks ---', bold=True)
     with cd('~/'):
         dotfiles = '''
-            zshrc zshenv tmux.conf vimrc vim gitignore gitconfig gitattributes
+            zshrc zshenv tmux.conf vimrc vim gitignore gitconfig gitattributes mackup.cfg
         '''.split()
-        map(lambda _: run('ln -sf dotfiles/_{0} .{0}'.format(_)), dotfiles)
+        map(lambda _: run('ln -sf {0}/_{1} .{1}'.format(src, _)), dotfiles)
 
 
 @task
 def change_shell():
     print white('--- change shell ---', bold=True)
-    run('chsh -s /bin/zsh')
+    run('chsh -s /usr/local/bin/zsh')
+
+
+@task
+def restore_mackup():
+    print white('--- restore mackup ---', bold=True)
+    run('mackup restore')
+
+@task
+def set_mac_environment():
+    print white('--- set mac environment ---', bold=True)
+    sudo('nvram SystemAudioVolume=%80')
+
+    run('defaults write com.apple.dock autohide -bool true')
+    run('defaults write com.apple.dock autohide-delay -float 0')
+    run('defaults write com.apple.dock magnification -bool true')
+    run('defaults write com.apple.dock tilesize -int 40')
+    run('defaults write com.apple.dock largesize -int 80')
+    run('defaults write com.apple.dock mineffect -string "scale"')
+    run('killall Dock')
+
+    run('defaults write com.apple.finder CreateDesktop -bool false')
+    run('killall Finder')

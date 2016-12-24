@@ -1,16 +1,19 @@
-#!/bin/sh
+#!bin/sh
 
 # install and bundle homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew bundle
 
-# install easy_install
-# wget https://bootstrap.pypa.io/ez_setup.py
-# sudo python ez_setup.py
-# rm ez_setup.py
-#
-# # install fabric cuisine
-# sudo easy_install fabric cuisine
-#
-# # run fabfile
-# fab main --initial-password-prompt -H localhost
+# setup python environment and install some libraries
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+pyenv install 2.7.13
+pyenv virtualenv 2.7.13 default
+pyenv global default
+pyenv exec pip install fabric cuisine ipython
+
+# execute fabric script
+fab setup_mac --initial-password-prompt -H localhost
