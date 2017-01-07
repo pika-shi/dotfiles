@@ -6,8 +6,7 @@ from fabric.contrib import console
 from fabric.colors import white
 
 
-env.warn_only = True
-dotfiles_path = '.ghq/github.com/pika-shi/dotfiles'
+env.warn_only = True dotfiles_path = '.ghq/github.com/pika-shi/dotfiles'
 
 
 @task(default=True)
@@ -32,7 +31,7 @@ def set_symlinks():
     print white('--- set symlinks ---', bold=True)
     with lcd('~/'):
         dotfiles = '''
-	    zshrc zshenv tmux.conf vimrc tmux vim gitignore gitconfig gitattributes mackup.cfg
+	    zshrc zshenv tmux.conf vimrc tmux tmuxinator vim gitignore gitconfig gitattributes mackup.cfg
         '''.split()
         map(lambda _: local('ln -sf {0}/_{1} .{1}'.format(dotfiles_path, _)), dotfiles)
 

@@ -1,0 +1,16 @@
+name: folio
+root: ~/.ghq/gitlab.dev.folio-sec.com/Folio/folicolle-web
+
+windows:
+  - folio-web:
+      layout: 12d4,426x70,0,0{106x70,0,0[106x35,0,0,0,106x34,0,36,7],106x70,107,0[106x35,107,0,5,106x34,107,36,6],106x70,214,0[106x35,214,0,1,106x34,214,36,4],105x70,321,0[105x35,321,0,2,105x34,321,36,3]}
+      panes:
+        - pane0:
+        - pane1:
+        - pane2:
+        - pane3:
+        - pane4:
+        - pane5:
+        - pane6:
+        - pane7:
+          - yarn build
