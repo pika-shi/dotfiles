@@ -34,6 +34,7 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'surround.vim'
 NeoBundle 'IN3D/vim-raml'
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'solarnz/thrift.vim'
 
 NeoBundle "Shougo/neocomplete.vim"
   let g:neocomplete#enable_at_startup = 1
